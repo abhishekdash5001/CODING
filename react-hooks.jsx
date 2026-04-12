@@ -1,5 +1,7 @@
 //What problem did Hooks solve in React
 
+const { useMemo } = require("react");
+
 // 1.For eg we have to write logic of riesize for this we have to create HOC and wrap all compoennt in side it
 // but with hooks that not the issue we can crate custom hooks and component and call them if they want to simle
 
@@ -173,3 +175,46 @@ useEffect(()=>{
  * useLayouteffect fixes it before it is shown in the UI
  * tootlip heihgt   
  */
+
+
+/**
+ * useMemo if in the compoennt we have expensive calution that calculation will trigge on every render to st that we use useMemo and use the cached value untill
+ * dependency is chaged
+ */
+
+const validValues = useMemo(()=>{
+ return  Array.from({length:100000}).map((_,i)=>i).filter((_,i)=>{
+   return i > id
+ })
+
+},[id])
+
+<Child data={validValues}/>
+
+const Child = React.memo(function(props){
+  return (
+    <>Child</>
+  )
+})
+
+//const MemoChild = React.memo(Component, arePropsEqual)
+/**
+ * function arePropsEqual(prevProps, nextProps) {
+  // return true  -> skip re-render
+  // return false -> re-render
+}
+ */
+
+//Can useMemo be used for referential stability?  yes  
+
+//What is the tradeoff of overusing useMemo?  code complexity more memory 
+
+
+
+//useCallback caches function in subsequest re renders it doensot meean that function is executed and same dpeendcy
+// it does but the same refernce function and chil is aware that its same refernce so doenot re redner
+
+
+let b = useCallBack(()=>{
+  myFunc(id)
+},[id])

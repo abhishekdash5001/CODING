@@ -5,7 +5,7 @@ function useMyCustomHook(val){
 
 let  i = currentIndex;
 if(hooks[i] === undefined){
-    hooks[i]= current:hooks[i]
+    hooks[i]= current.hooks[i]
 }
 
 
