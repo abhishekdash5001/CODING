@@ -6,7 +6,7 @@ export const ThemeContext = createContext('light')
 
 export function App(){
     return(
-        <ThemeContext value='dark'>
+        <ThemeContext.provider value='dark'>
             <Child/>
 
         </ThemeContext>
