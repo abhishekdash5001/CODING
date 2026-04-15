@@ -15,7 +15,7 @@ Fixed window has limation 12:00:59 and 1:00:00 user can hid doublethe size in 2 
 
 
 Fixed window
-/**
+```js
 
 const express = require("express");
 const app = express();
@@ -54,12 +54,12 @@ app.get("/", (req, res) => {
 app.listen(3000);
 
 
- */
+
 
 
  FLoating window
 
- /**
+
  class SlidingWindowRateLimiter {
   constructor(limit, windowMs) {
     this.limit = limit;
@@ -127,4 +127,4 @@ function rateLimitMiddleware(req, res, next) {
 }
 
 module.exports = rateLimitMiddleware;
-  */
+```js
