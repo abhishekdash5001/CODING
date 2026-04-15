@@ -1,6 +1,6 @@
 ## code
 
-/**
+``` js
 const express = require("express");
 const cors = require("cors");
 
@@ -74,4 +74,4 @@ app.get("/api/profile", authMiddleware, (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
- */
+ ```
