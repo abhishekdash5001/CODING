@@ -31,7 +31,7 @@ so now ther jwt token in cleint side
 
 
 
-/**
+```js
 const express = require("express");
 const jwt = require("jsonwebtoken");
 
@@ -52,5 +52,4 @@ app.post("/login", (req, res) => {
 
   res.json({ message: "Login successful" });
 });
-
- */
+```
