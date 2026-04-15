@@ -108,6 +108,32 @@ Organization
 in content full localaisation is done in space we go to settings an EN_US EN_IN ES_FN then we go to content model and select any feild and enbale localaition
 and add text for those feils SKU pricce dont localize t
 
+India: mysite.com/en/home
+Spain: mysite.com/es/home
+
+
+/**
+
+export default async function Page({ params }) {
+  const localeMap = {
+    en: "en-US",
+    es: "es-ES",
+    fr: "fr-FR",
+  };
+
+  const contentfulLocale = localeMap[params.locale] || "en-US";
+
+  const data = await client.getEntries({
+    content_type: "page",
+    locale: contentfulLocale,
+  });
+
+  return <div>{data.items[0]?.fields?.title}</div>;
+}
+
+ */
+
+
 
 ## APi
   1.Content delivery APi -- for published content used in live webiste
