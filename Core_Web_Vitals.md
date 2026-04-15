@@ -161,10 +161,156 @@ ok so if we have 1big js and 1 big css bowser have to load everyting to just ren
   ## hasing 
   it give random numebr tofile if ode change file nuber chage caching wil change
   
+# Code Spliting
+ It breaking 1 single js file in to small peaces so that browser doesnot need to load js for all tother pages in 1 go this helps in
+ imporving LCP FCP,INP
 
+  1.Route Based Spliting
+   a Home will load home js
+   b Product will load product js
+  
+
+  2.Component based Spliting
+   a.if we are using a lib raary or some other component we can split it like this next js
+
+    import dynamic from next
+
+    const Chart = dynamic(() => import("./Chart"), {
+      ssr: false,
+      loading: () => <p>Loading map...</p>,
+    });
+
+
+    export default function Page() {
+      return <Chart />;
+    }
+
+
+  this will make anpther chunk for chart.js
+
+  3.Interaction based
+  if we modal that will show up on user click we can do something like
+
+  import Modal from '..//'
+    async function openModal() {
+      const Modal = await import("./Modal");
+    }
+     used for opening modal map editot
+
+
+     i usally split charts/map and editor by using react.lazy next.dynamic
 
 
   
+# Lazy Loading 
+  Laoading something when its actually in needed not every thing in 1 go
+
+  we can lazy load images map widgets modal component  
+  MAKE SURE LCP if image is not lazy loaded its priority  so that it will not imakce lCP 
+
+  using lazy loading will imprive LCP,FCP,INP,Hydration,bundleing
+
+
+# Render-blocking CSS/JS
+
+When HTML start parsing the HTML and see css /js it stops the parsing and downalod these files first then continue the parser
+ 1 Dom dowanloads html
+ 2.Creates DOM
+ 3.Downalods CSS to make cssom
+ 4 DOM and CSSOm combine
+ 4.Reflow layout
+ 6.Repaint
+ 7 js hydartion
+
+  ##   Why CSS blocks render
+   supppose we have a large css it measn home page is loading css for all other pages this impaces LCP FCP 
+    1.use component based css
+    2. remove un used css
+    3.use inline rarely
+  
+  ##  Why js is bloker
+  HTML is getting parsed and parser sees this
+
+   <script src="/main.js"></script>
+   pareser will stop and download this script and start execution then pareser will again start with html
+   1.use Defer
+    a- Script will be downaloded parallerly
+    b Will be executed ofter parsing of html is done
+    c - Will execute befreo comcontent load
+    d preserves the order 
+
+    good for anlyatics that read doms ,depedent scripts ,mainjs
+
+   2. use Async
+   a- Script will be downaloded parallerly
+    b Will be executed on donlaod is done
+    c doesnot preserve order
+
+    good anytics ads  tracking
+
+  for eg if we have react compoent in that wewe are using chart map better use dynaimc form next to lazy load these makethe budle sixe small
+
+
+  common killers 
+   GTM,HotZar ,adds ,chat widget
+   fix load after consent ,async defer ,aufit GTML
+
+
+   ### React Profiler helps identify slow React renders and unnecessary re-renders. I use it to record interactions, check render duration, see which component
+
+# Hydration
+
+  SSG SSR gives html to cleint browser has to the download the js execute it and aattach event handlers to make it interactive  this is hydration 
+  if lots of things need to be downloaded then hydration cost will become more
+  
+  # BAD                                                                                 # Good
+  1. Dont make every compoennt client side unless inetraction is there                   Add use client or states only on the specif compoennt
+  2.Dont import all charts maps on the go                                                  use Lazy loadin fo hevay js library in compoent
+
+
+## Production monitoring / RUM
+
+    real LCP
+    real INP
+    real CLS
+    real page load times
+    real slow routes
+    device/browser breakdown
+
+
+    use Data dog
+    Oncrawl 
+
+    Dev profiling = why is this component slow?  detailed component profiling is usually done in dev, but real performance measurement must also happen in production.
+    Prod monitoring = are real users actually slow?
+  
+
+
+# Caching + CDN
+
+  Caching means saving the response /pge so that it will not dowanloaded /fetched agaiin when required
+
+  it is not always neccesry that cleint is slow some time server can be slow bcz of hevy traffic no caching,high server load ,no indexing so we Caching to make it fast
+
+  1.Browser Caching
+  for the frist time when user hits a url it downnloads the main..js. main.css font and it s cached in the browser so it can be re used 
+  it is controlleed by headers like cache control etag 
+  cahcecontrol :  it has 3 parts cache can be used in brwser/cdn and expriy date  and file will not change for same url
+
+  2 CDN Content delivery netweork 
+   we stores data /pages all arounf the world so the distance btween the user and server beccomes less and this will hepl in netwrok letancy ,TTFB,LCP
+
+   Caching IN CDN if cached in cdn it will never reach server
+
+  3.Server caching
+   we can cahcing serach result  product data we can use redis or memory of server for the sane so that agan compuation is not required
+  
+
+  4.Framwork caching like we have next js
+
+  Caching reduces repeated work.
+  CDN reduces distance.
+  Together they improve speed and scale.
 
 
 # How to improve perfomace
