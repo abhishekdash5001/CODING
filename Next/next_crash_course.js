@@ -168,7 +168,7 @@ let a = fetch('url',{
 import { revalidateTag } from 'next/cache';
 
 export async function refreshBlog() {
-    revalidateTag('post');//  -> this will invalidate  cache for that path
+    revalidateTag('post','max');//  -> this will invalidate  cache for that path
 }
 
 /* -------- IN APP ROUTE -------- */
@@ -419,7 +419,7 @@ export default function FeedPage() {
       <ul>
         {photos.map((photo) => (
           <li key={photo.id}>
-            <Link href={`/photo/${photo.id}`}>{photo.title}</Link> < this links to folder strycture above that open the modal
+            <Link href={`/photo/${photo.id}`}>{photo.title}</Link> < this links to folder strycture above that open the modal   
           </li>
         ))}
       </ul>
