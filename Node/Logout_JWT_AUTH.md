@@ -4,7 +4,7 @@ jwt is mostly stateless so there are teo ways
 
 1. we call logut api and server will send response 
 this is whenboth in http only
-
+```js
 app.post("/logout", (req, res) => {
   res.clearCookie("accessToken", {
     httpOnly: true,
@@ -30,6 +30,7 @@ so now ther jwt token in cleint side
 3. we have accetoken in code so will cear the meemoty in react and  refersh tokken onvalid in db  so that it can be used to gt new acces token
 
 
+```
 
 ```js
 const express = require("express");
