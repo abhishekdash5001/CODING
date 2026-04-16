@@ -1,0 +1,2 @@
+## “ALB understands HTTP requests, so it can route using path, host, and rules based on request content.”
+##  “NLB mainly forwards network connections such as TCP/UDP/TLS. It does not understand URL paths like ALB.”

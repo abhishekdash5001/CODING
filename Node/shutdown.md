@@ -21,4 +21,6 @@ function shutdown() {
 
 ```
 
+pm2 reload that will call prvious process and make prevous processa re completed
+
 likehow shops are closed
