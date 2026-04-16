@@ -11,7 +11,7 @@ If count > 5, block request
 ↓
 Else allow
 
-
+```js
 const requests = new Map();
 
 function rateLimiter(req, res, next) {
