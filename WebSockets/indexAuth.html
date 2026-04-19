@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <button onclick="deletefn()">
+        delet
+    </button>
+  
+    <script>
+      const socket = new WebSocket("ws://localhost:8080?token=admin-token");
+
+      socket.onmessage= (message)=>{
+ console.log(message)
+      }
+
+      socket.onopen=()=>{
+       socket.send(JSON.stringify({
+        type: "chat_message",
+        text: "hi team",
+       }))
+      }
+
+
+
+      function deletefn(){
+
+        socket.send(
+    JSON.stringify({
+      type: "delete_message",
+      messageId: 101,
+    })
+  );
+      }
+
+    </script>
+  </body>
+</html>

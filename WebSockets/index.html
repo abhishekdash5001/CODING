@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+  <body>
+    <h2>WebSocket Demo</h2>
+    <div id="status">Connecting...</div>
+    <div id="count">Processed: 0</div>
+
+    <script>
+      const status = document.getElementById("status");
+      const countEl = document.getElementById("count");
+
+      const socket = new WebSocket("ws://localhost:8080");
+
+      let processed = 0;
+      let lastMessage = null;
+
+      socket.onopen = () => {
+        status.textContent = "Connected";
+      };
+
+      //   socket.onmessage = (event) => {
+      //     // simulate slow processing
+      //     const start = Date.now();
+      //     while (Date.now() - start < 20) {
+      //       // block CPU for 20ms
+      //     }
+
+      //     const data = JSON.parse(event.data);
+      //     processed++;
+      //     countEl.textContent = `Processed: ${processed}, last id: ${data.id}`;
+      //   };
+
+      //PROTECTION 1 Update ui after some cool down period les layout work throttle renderring
+
+      socket.onmessage=(event)=>{
+         processed++;
+         sum = sum+  JSON.parse(event.data).value
+      }
+
+      setInterval(()=>{
+          if(lastMessage){
+              countEl.textContent = `Processed: ${processed}, last id: ${lastMessage.id}`;
+          }
+      },200)
+
+      //PROTECTION 2    fix the size
+
+          let quque =[]
+          let max_que = 3000;
+
+          socket.onmessage = (event)=>{
+              processed++
+              if(quque.length >= max_que){
+                  // drop the oldes
+                  quque.shift()
+              }
+              quque.push(event)
+          }
+
+          function batchProcess(){
+        console.log('b4 repaint')
+              const batchSize = 20;
+
+              for(let  i =0;i<batchSize && quque.length >0;i++){
+                  const raw = quque.shift()
+                  const data = JSON.parse(raw.data)
+
+                  countEl.textContent = `Processed: ${processed}, last id: ${data.id}`;
+              }
+
+              requestAnimationFrame(batchProcess)
+          }
+
+          batchProcess()
+
+      //PROTECTION 3 latest rendering
+
+      socket.onmessage = (event) => {
+        lastMessage = JSON.parse(event.data); // we are keepting thlatest data
+      };
+
+      setInterval(() => {
+        if (!lastMessage) {
+          return;
+        }
+
+         countEl.textContent = `Processed: ${processed}, last id: ${lastMessage.id}`
+      }, 1000);
+
+
+    </script>
+  </body>
+</html>

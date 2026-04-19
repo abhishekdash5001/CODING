@@ -1,0 +1,142 @@
+/* 
+Think of Flexbox as a way to arrange items in one dimension at a time:
+
+either in a row
+or in a column
+
+
+Flexbox always has:
+
+Flex container → parent
+Flex items → direct children
+
+<div class="container">
+  <div>One</div>
+  <div>Two</div>
+  <div>Three</div>
+</div>
+
+By default, the items go in a row.
+
+*/
+
+.container {
+    display: flex;
+  }
+
+  /**
+If flex-direction: row
+main axis = left to right
+cross axis = top to bottom
+
+
+If flex-direction: column
+main axis = top to bottom
+cross axis = left to right
+
+  */
+
+
+  .container {
+    display: flex;
+    flex-direction: row; /** they will be arraged left to right */
+    flex-wrap: nowrap;  /** Items wil always be 1 line wiill not go the second line */
+    justify-content: flex-start;  /** items will start from begiging of main axis */
+    align-items: stretch;  /** itemas will strach on cross axis if possible */
+  }
+
+  /**
+default value of align-items is strech
+baslie is used to align flex ites to sit on the baseline both will try to sit on ame baselime
+  */
+
+
+
+
+
+
+  /**
+
+align contnet - align flex lines for exmaple we flex-wrap = wrap then we can use it align flex liie
+align items - used to align itmes in the line
+  */
+
+
+
+
+
+
+
+
+  /**
+flex-flow is hotrt hand flex-deriection and flex-wrap
+
+  */
+
+.a{
+    flex-flow: row wrap;
+}
+
+.a{
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+
+/**
+
+flex-grow  controls how much flex items can grow if sapace is available
+1:2:1
+flex-grow does not mean exact width.
+It means share of leftover free space.
+
+
+ these are felx item props
+flex-grow: 0 → item does not grow by default
+flex-shrink: 1 → item can shrink by default
+flex-basis: auto → initial size comes from content / width
+
+so if there is no space itesm are allowrd to shrink so that thean can come in startline
+
+ligic we have 300px contianer 100 100 400px  flex:wrap items  now 3rd item will not first line  it will be 2nf ilne but secind line has 300px so 3rd boxwill shrink
+*/
+
+
+.item1 { flex-grow: 1; }
+.item2 { flex-grow: 2; }
+.item3 { flex-grow: 1; }
+
+
+
+/**
+flex-basis is auto then it will take width that we have given  but if flexbasis 200 width 300 wiill not work
+
+
+*/
+
+
+
+.container {
+    display: flex;
+    align-items: center;  /** al items are algn cneter iwth crssaxis*/
+  }
+  
+  .special {
+    align-self: flex-start; /* special will aligned start **/
+  }
+
+
+/***************************************/
+
+  .item1 { order: 2; }
+  .item2 { order: 1; }
+  .item3 { order: 3; }
+
+  /*** this will only chage the order the visual not dom o
+
+  /
+
+
+  /----------------------------------------------/
+
+  flex 1 flex grow 1 flex shrink 1 flebasis 0 start with 0 and then take avialbe spave

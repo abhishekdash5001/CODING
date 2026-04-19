@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <input id="msg" placeholder="Type message" />
+    <button onclick="sendMessage()">Send</button>
+    <input id="msg" placeholder="Type message" />
+    <button onclick="sendMessage2()">Send</button>
+    <ul id="messages"></ul>
+
+    <script>
+      const socket = new WebSocket("ws://localhost:8080");
+
+      const socket2 = new WebSocket("ws://localhost:8081");
+
+      socket.onopen = () => {
+        console.log("Connected");
+      };
+
+      socket2.onopen = () => {
+        console.log("Connected");
+      };
+
+      socket.onmessage = (event) => {
+        const li = document.createElement("li");
+        li.textContent = event.data;
+        document.getElementById("messages").appendChild(li);
+      };
+
+
+
+      socket2.onmessage = (event) => {
+        const li = document.createElement("li");
+        li.textContent = event.data;
+        document.getElementById("messages").appendChild(li);
+      };
+
+      socket.onclose = () => {
+        console.log("Disconnected");
+      };
+      socket2.onclose = () => {
+        console.log("Disconnected");
+      };
+
+      function sendMessage() {
+        const input = document.getElementById("msg");
+        socket.send(input.value);
+        input.value = "";
+      }
+
+      function sendMessage2() {
+        const input = document.getElementById("msg");
+        socket2.send(input.value);
+        input.value = "";
+      }
+    </script>
+  </body>
+</html>

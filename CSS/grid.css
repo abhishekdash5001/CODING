@@ -1,0 +1,263 @@
+/* grid is used when we wan to controll layout in 2 dimenstion*
+oarent is grid-contanier
+child is grid -tem
+
+
+rows control height
+columns control width
+
+/
+
+/ 1) First visual: basic grid 
+<div class="container">
+  <div>A</div>
+  <div>B</div>
+  <div>C</div>
+  <div>D</div>
+</div>
+
+*/
+
+/*----------First visual: basic grid ----------------*/
+
+/*
+<div class="container">
+  <div>A</div>
+  <div>B</div>
+  <div>C</div>
+  <div>D</div>
+</div>
+*/
+
+
+.container {
+  display: grid;
+  grid-template-columns: 100px 100px 100px;  /* this says grid will have 3 columns of 100 px */
+  gap: 10px;
+}
+
+/* 
++-----+  +-----+  +-----+
+|  A  |  |  B  |  |  C  |
++-----+  +-----+  +-----+
+
++-----+
+|  D  |
++-----+
+4th item came 2nd line bcz grid has only 3 columns
+
+
+I know there are 3 columns. I will place items left to right, then next row.”
+
+
+suppose container is of 900px
+  grid-template-columns: 1fr 1fr 1fr; > 300 300 300
+grid-template-columns: 1fr 2fr 1fr;  225 450 225
+
+give me a fraction of remaining available space
+
+grid-template-columns: 200px 1fr;  --> 200 700 (remaining space)
+
+grid-template-columns: 1fr 1fr 1fr 1fr; or  grid-template-columns: repeat(4, 1fr);
+
+*/
+
+/*--------------------------*/
+
+
+/*--- item spanning columns ---*/
+
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* there will be 3 column wiht eqaul spave*/
+    gap: 10px;
+  }
+  
+  .big {
+    grid-column: span 2; /* bif will take sapve of two column */
+  }
+
+
+/* 
++-------------------+-------------------+-------------------+
+|         A spans 2 columns            |         B         |
++-------------------+-------------------+-------------------+
+|         C         |         D         |
++-------------------+-------------------+ 
+*/
+
+/*--- item spanning columns ---*/
+
+
+
+
+
+
+/*-- item spanning rows-----*/
+
+
+/*
+<div class="container">
+  <div class="tall">A</div>
+  <div>B</div>
+  <div>C</div>
+  <div>D</div>
+  <div>E</div>
+</div>
+
+*/
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);  /* 3 columns of 100 px */
+    grid-auto-rows: 100px;  /* this tells autmatic rows will have height of 100px*/
+    gap: 10px;
+  }
+  
+  .tall {
+    grid-row: span 2;/* this will take heght of 2 rows*/
+  }
+/*
++-------+-------+-------+
+|   A   |   B   |   C   |
+|       +-------+-------+
+|       |   D   |   E   |
++-------+-------+-------+
+
+
+*?
+
+/*-- item spanning rows-----*/
+
+
+
+
+/*-----using grid lines -----*/
+
+/*
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+
+1        2        3        4
+|--------|--------|--------|
+
+
+.item {
+  grid-column: 1 / 3;
+}
+
+
+That means:
+
+start at line 1
+end at line 3
+*/
+
+
+
+/*-----using grid lines -----*/
+
+
+
+/*-----grid-template-areas---*/
+
+
+.container {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: 80px 1fr 60px;
+    grid-template-areas:
+      "header header"
+      "sidebar main"
+      "footer footer";
+    gap: 10px;
+  }
+
+  .header  { grid-area: header; }
+.sidebar { grid-area: sidebar; }
+.main    { grid-area: main; }
+.footer  { grid-area: footer; }
+
+/*
++--------------------------------------+
+|               HEADER                 |
++---------------+----------------------+
+|    SIDEBAR    |         MAIN         |
+|               |                      |
+|               |                      |
++---------------+----------------------+
+|               FOOTER                 |
++--------------------------------------+
+
+*/
+
+
+
+/*-----grid-template-areas---*/
+
+
+
+
+
+/*-----auto fit---*/
+
+/*
+
+<div class="container2">
+  <div class="tall">A</div>
+  <div>B</div>
+  <div>C</div>
+  <div>D</div>
+  <div>E</div>
+  <div class="tall">A</div>
+  <div>B</div>
+  <div>C</div>
+  <div>D</div>
+  <div>E</div><div class="tall">A</div>
+  <div>B</div>
+  <div>C</div>
+  <div>D</div>
+  <div>E</div>
+</div>
+
+*/
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* it can fit as many columns as possible but each clumn will have minim 200px not less that that  and if space is htere you can grow*/
+    gap: 16px;
+  }
+
+
+
+
+
+/*-----auto fit---*/
+
+
+
+/* justify-content */
+
+/*
+Moves the whole group:
+
+|      [A][B][C]      |
+
+*/
+
+
+/* justify-items */
+
+/*
+Moves item inside each cell:
+
+|   A   |   B   |   C   |
+
+*/
+
+
+/* place item place conent place slef asre short hand justogy and align*
