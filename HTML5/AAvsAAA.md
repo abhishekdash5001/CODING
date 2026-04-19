@@ -8,6 +8,8 @@ for eg
 
 
  1.user should be able to use site without mouse
+
+ 
  2.proper semantic HTML so screen readers understand page
  3.content should not break badly on smaller screens
  4.meaningful images should have alt text
