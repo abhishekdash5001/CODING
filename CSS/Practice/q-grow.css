@@ -1,0 +1,14 @@
+.grow-container{
+    display: flex;
+}
+
+.grow-box{
+    border: 1px solid black;
+    flex-basis: 100px;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.grow-box2{
+    flex-grow: 1;
+}

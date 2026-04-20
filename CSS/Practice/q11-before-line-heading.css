@@ -1,0 +1,15 @@
+.line-title::before{
+    content: '';
+    display: inline-block;
+    border-bottom: 1px solid black;
+    width: 40px;
+    height: 3px;
+    margin-right: 10px;
+    vertical-align: middle;
+
+}
+
+/*
+width and height usually do not work on an inline pseudo-element the way you expect
+for a line shape, make the pseudo-element a box with display: inline-block or block
+*/

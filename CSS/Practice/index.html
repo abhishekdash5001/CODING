@@ -1,0 +1,246 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./q1-flex-center.css" />
+    <link rel="stylesheet" href="./q3-flex-cards.css" />
+    <link rel="stylesheet" href="./q2-navbar-flex.css" />
+    <link rel="stylesheet" href="./q4-sidebar-content.css" />
+    <link rel="stylesheet" href="./q5-sticky-footer-flex.css" />
+    <link rel="stylesheet" href="./q-grow.css" />
+    <link rel="stylesheet" href="./q-shrink.css" />
+    <link rel="stylesheet" href="./q-basis.css" />
+    <link rel="stylesheet" href="./q6-grid-3-columns.css" />
+    <link rel="stylesheet" href="./q7-responsive-grid.css" />
+    <link rel="stylesheet" href="./q8-grid-template-areas.css" />
+    <link rel="stylesheet" href="./q9-grid-span.css" />
+    <link rel="stylesheet" href="./q10-grid-gallery.css" />
+    <link rel="stylesheet" href="./q11-before-line-heading.css" />
+    <link rel="stylesheet" href="./q12-quote-before-after.css" />
+    <link rel="stylesheet" href="./q13-custom-bullet-before.css" />
+    <link rel="stylesheet" href="./q14-image-overlay-before.css" />
+    <link rel="stylesheet" href="./q15-notification-dot-after.css" />
+    <link rel="stylesheet" href="./q16-circle-pseudo-element.css" />
+    <link rel="stylesheet" href="./q17-triangle-tooltip.css" />
+    <link rel="stylesheet" href="./q18-speech-bubble-tail.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      Create a parent container of 300px height and place one child exactly at
+      the center horizontally and vertically using flexbox.
+      <div class="parent">
+        <div class="child">Box</div>
+      </div>
+    </div>
+
+    <div class="wrapper">
+      Create a navbar using flexbox: Requirements logo on the left menu on the
+      right menu items in one row all items vertically centered
+
+      <nav class="nav">
+        <div class="logo">Logo</div>
+
+        <ul class="menu">
+          <li>Home</li>
+          <li>About</li>
+          <li>Contact</li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="wrapper">
+      Create 3 cards in one row using flexbox such that: all cards have equal
+      width gap is 20px on small screens they wrap to next line
+
+      <div class="cards">
+        <div class="card">Card 1</div>
+        <div class="card">Card 2</div>
+        <div class="card">Card 3</div>
+      </div>
+    </div>
+
+    <div class="wrapper">
+      <div class="layout">
+        <aside class="sidebar">Sidebar</aside>
+        <main class="content">Content</main>
+      </div>
+    </div>
+
+    <div class="wrapper">
+      Create a full-page layout with: header main content footer stuck at bottom
+      even when content is small
+
+      <div class="page">
+        <header class="header">Header</header>
+        <main class="main">Main Content</main>
+        <footer class="footer">Footer</footer>
+      </div>
+    </div>
+
+    <div class="wrapper">
+      Create a row with 3 boxes inside a flex container such that: all boxes
+      start with width 100px the second box should take all extra remaining
+      space first and third box should remain 100px
+
+      <div class="grow-container">
+        <div class="grow-box grow-box1">1</div>
+        <div class="grow-box grow-box2">2</div>
+        <div class="grow-box grow-box3">3</div>
+      </div>
+    </div>
+
+    <div class="wrapper">
+      flex-shrink question Create a flex container of width 300px with 3 boxes,
+      each having width 150px. Requirements all 3 boxes stay in one row first
+      and second box can shrink third box should not shrink
+
+      <div class="shrink-container">
+        <div class="shrink-box shrink-box1">1</div>
+        <div class="shrink-box shrink-box2">2</div>
+        <div class="shrink-box shrink-box3">3</div>
+      </div>
+    </div>
+
+    <div class="wrapper">
+      flex-basis question Create 3 flex items where: all items can grow equally
+      initial preferred width of each item should be 200px when space is less,
+      they can shrink when space is more, they grow equally
+
+      <div class="basis-container">
+        <div class="basis-box">A</div>
+        <div class="basis-box">B</div>
+        <div class="basis-box">C</div>
+      </div>
+    </div>
+
+    <div class="wrapper">
+      Create a 3-column grid with: equal columns 15px gap
+
+      <div class="grid3-container">
+        <div class="grid3-item">1</div>
+        <div class="grid3-item">2</div>
+        <div class="grid3-item">3</div>
+        <div class="grid3-item">4</div>
+        <div class="grid3-item">5</div>
+        <div class="grid3-item">6</div>
+      </div>
+    </div>
+
+    <div class="wrapper">
+      Create a responsive card layout using grid where: each card minimum width
+      is 200px number of columns adjusts automatically cards stretch equally
+
+      <div class="rgrid-container">
+        <div class="rgrid-item">1</div>
+        <div class="rgrid-item">2</div>
+        <div class="rgrid-item">3</div>
+        <div class="rgrid-item">4</div>
+        <div class="rgrid-item">5</div>
+        <div class="rgrid-item">6</div>
+      </div>
+    </div>
+
+    <div class="wrapper">
+      Create a layout using grid: header full width sidebar left main content
+      right footer full width Use grid-template-areas.
+      <div class="area-layout">
+        <header class="area-header">Header</header>
+        <aside class="area-sidebar">Sidebar</aside>
+        <main class="area-main">Main</main>
+        <footer class="area-footer">Footer</footer>
+      </div>
+    </div>
+
+    <div class="wrapper">
+      Create a grid where the first item spans all 3 columns.
+
+      <div class="span-grid">
+        <div class="span-item span-item1">1</div>
+        <div class="span-item">2</div>
+        <div class="span-item">3</div>
+        <div class="span-item">4</div>
+        <div class="span-item">5</div>
+      </div>
+    </div>
+
+    <div class="wrapper">
+      Create an image gallery using grid where: normal images take 1 cell one
+      featured image spans 2 columns and 2 rows
+
+      <div class="gallery-grid">
+        <div class="gallery-item gallery-featured">Featured</div>
+        <div class="gallery-item">2</div>
+        <div class="gallery-item">3</div>
+        <div class="gallery-item">4</div>
+        <div class="gallery-item">5</div>
+      </div>
+    </div>
+
+    <div class="wrapper">
+      Add a decorative horizontal line before a heading using ::before.
+      <h2 class="line-title">Features</h2>
+    </div>
+
+    <div class="wrapper">
+      Add opening and closing quotation marks around a paragraph using ::before
+      and ::after.
+      <p class="quote-text">CSS is awesome</p>
+    </div>
+
+    <div class="wrapper">
+      Create a custom bullet for list items using ::before instead of default
+      bullets.
+      <ul class="bullet-list">
+        <li class="bullet-item">HTML</li>
+        <li class="bullet-item">CSS</li>
+        <li class="bullet-item">JavaScript</li>
+      </ul>
+    </div>
+
+    <div class="wrapper">
+      Create a dark overlay on an image card using ::before.
+
+      <div class="overlay-card">
+        <img
+          class="overlay-image"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/250px-Vue.js_Logo_2.svg.png"
+          alt="placeholder"
+        />
+      </div>
+    </div>
+
+    <div class="wrapper">
+      Create a red notification dot on the top-right corner of an icon using
+      ::after.
+
+      <div class="notify-icon">🔔</div>
+    </div>
+
+    <div class="wrapper">
+      Create a circle using a pseudo-element.
+      <div class="circle-box">Box</div>
+    </div>
+
+    <div class="wrapper">
+      Create a triangle using a pseudo-element for a tooltip arrow. Requirements
+      use ::after triangle should appear below the box do not use extra HTML use
+      the border trick
+      <div class="tooltip-box">Tooltip</div>
+    </div>
+
+    <div>
+
+        Create a speech bubble tail using ::before.
+
+        <div class="speech-box">Hello there</div>
+    </div>
+  </body>
+</html>

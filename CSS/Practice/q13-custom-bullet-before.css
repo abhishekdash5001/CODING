@@ -1,0 +1,12 @@
+.bullet-list{
+    list-style: none;
+}
+
+.bullet-item::before{
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    margin-right: 10px;
+}

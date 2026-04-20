@@ -1,0 +1,20 @@
+.page{
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    align-content:space-around ;
+}
+
+.header{
+    flex:  0 0 200px;
+}
+
+.main{
+    flex: 1 1 0;
+}
+
+.footer{
+    flex:  0 0 200px;
+}
+
+

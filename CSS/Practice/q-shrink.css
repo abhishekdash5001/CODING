@@ -1,0 +1,16 @@
+.shrink-container{
+    display: flex;
+    width:300px;
+
+}
+
+.shrink-box{
+    flex-basis: 150px;
+
+
+    border: 1px solid black;
+}
+
+.shrink-box3{
+    flex-shrink: 0;
+}

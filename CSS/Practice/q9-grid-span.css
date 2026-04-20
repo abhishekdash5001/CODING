@@ -1,0 +1,10 @@
+.span-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr)
+}
+.span-item{
+    border:1px solid green
+}
+.span-item1{
+    grid-column: 1/4;
+}

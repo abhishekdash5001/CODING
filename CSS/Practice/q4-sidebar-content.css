@@ -1,0 +1,12 @@
+.layout{
+    display: flex
+}
+
+.sidebar{
+    flex: 0 0 250px;
+    height: 200px;
+  
+}
+.content{
+    flex-grow: 1;
+}

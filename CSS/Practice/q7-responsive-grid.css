@@ -1,0 +1,7 @@
+.rgrid-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(200px, 1fr));
+}
+.rgrid-item{
+    border: 1px solid green;
+}

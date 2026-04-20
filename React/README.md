@@ -218,3 +218,12 @@ const Child = React.memo(function(props){
 let b = useCallBack(()=>{
   myFunc(id)
 },[id])
+
+
+
+##  useLayouteffect
+React renders
+DOM is updated
+useLayoutEffect runs
+browser paints screen
+useEffect runs later

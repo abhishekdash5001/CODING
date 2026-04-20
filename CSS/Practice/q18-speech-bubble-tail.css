@@ -1,0 +1,19 @@
+.speech-box {
+    position: relative;
+    display: inline-block;
+    padding: 12px 16px;
+    background: lightgray;
+    border-radius: 12px;
+  }
+  
+  .speech-box::before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 20px;
+    top: 100%;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid lightgray;
+  }

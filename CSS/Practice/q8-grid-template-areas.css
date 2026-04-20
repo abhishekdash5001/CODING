@@ -1,0 +1,31 @@
+.area-layout{
+    display: grid;
+    grid-template-areas: 
+    "header header"
+    "sidebar main"
+    "footer footer"
+    ;
+
+
+    
+}
+
+.area-header{
+    grid-area: header;
+    border: 1px solid green;
+}
+
+.area-sidebar{
+    grid-area: sidebar;
+    border: 1px solid green;
+}
+
+.area-main{
+    grid-area: main;
+    border: 1px solid green;
+}
+
+.area-footer{
+    grid-area: footer;
+    border: 1px solid green;
+}

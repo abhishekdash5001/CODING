@@ -1,0 +1,15 @@
+.notify-icon{
+    position: relative;
+    display: inline-block;
+}
+
+.notify-icon::after{
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: red;
+    top: 0;
+    right: 0;
+}

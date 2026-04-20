@@ -1,0 +1,10 @@
+.basis-container{
+    display: flex
+}
+
+.basis-box{
+    flex-grow: 1;
+    flex-basis: 200px;
+    flex-shrink: 1;
+    border: 2px solid green;
+}

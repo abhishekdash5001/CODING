@@ -1,0 +1,4 @@
+.quote-text::before,.quote-text::after{
+    content: '"';
+    font-weight: 600;
+}
