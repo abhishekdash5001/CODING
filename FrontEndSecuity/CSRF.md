@@ -1,5 +1,42 @@
 # Set:Cookie acces_token:JWT HTTPONLY,SECURE,samsite:'LAx'
 
+```js
+const express = require("express");
+const jwt = require("jsonwebtoken");
+
+const app = express();
+app.use(express.json());
+
+app.post("/login", (req, res) => {
+  const user = {
+    id: 1,
+    email: "test@example.com",
+    role: "admin",
+  };
+
+  const accessToken = jwt.sign(user, "your_jwt_secret", {
+    expiresIn: "15m",
+  });
+
+  res.cookie("access_token", accessToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "lax",
+    maxAge: 15 * 60 * 1000,
+  });
+
+  res.status(200).json({
+    message: "Login successful",
+  });
+});
+
+app.listen(3000, () => {
+  console.log("Server running on port 3000");
+});
+
+
+```
+
   # SameSite :"Strict" -> 1 .cookies wil be sent when request is trully from the webiste 
                           2. if user coming to bank.com from a normal webiste and he is expecitng to land on some page but it will not work beacuse cookies will not sent
   

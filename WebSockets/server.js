@@ -20,7 +20,7 @@ wss.on('connection',(ws)=>{ //wss.on means litsne to an event 'connection' is wh
     },1500)
     ws.on('close',()=>{ // lisen to close evetn
         clearInterval(interval)
-        console.log('connection closed')
+        console.log('connection closed') //tdont do termition here it gracefully closed we termanimate heartbeat ping pong
     })
 
 })

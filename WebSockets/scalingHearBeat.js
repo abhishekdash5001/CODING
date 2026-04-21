@@ -69,6 +69,8 @@ async function start() {
       }
       ws.isAlive = false
       ws.ping()
+      //server ---- ping ----> client
+      //server <--- pong ---- client
     }
   }, 10000);
 

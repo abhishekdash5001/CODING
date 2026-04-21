@@ -156,4 +156,7 @@ grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 
   # long text in small screen over-flow :break-word  first ries to wrap it possible then break it but word-break:brea-all is more agressive
 
+
+  #  font-size: clamp(1rem, 2vw, 2rem);
+
   
