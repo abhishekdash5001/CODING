@@ -611,3 +611,132 @@ paid version has 1gb limit and image has its own limit if its biigger than 20mb 
 ## Price COnversion
 
 Contenfull doesnot convert we can price and curency in contnet type and use this data in backend or front end and use rate conversion api(ExchangeRate-API)
+
+
+## how regions are configured in cms
+### Apprach 1 
+
+### Approach 2  you create a separate content type:
+
+```js
+Region
+- name
+- code
+- defaultLocale
+- supportedLocales
+- currency
+- domain
+
+
+{
+  name: "Canada",
+  code: "ca",
+  defaultLocale: "en-CA",
+  supportedLocales: ["en-CA", "fr-CA"],
+  currency: "CAD",
+  domain: "ca.example.com"
+}
+
+{
+  name: "United States",
+  code: "us",
+  defaultLocale: "en-US",
+  supportedLocales: ["en-US", "es-US"],
+  currency: "USD"
+}
+```
+
+#### Then your Page content type has:
+
+```js
+Page
+- title
+- slug
+- region reference
+- sections
+
+{
+  title: "About DAP Canada",
+  slug: "/about",
+  region: Reference to Canada Region entry
+}
+```
+
+```js
+const regions = [
+  {
+    id: "region-us",
+    name: "United States",
+    code: "us",
+    currency: "USD",
+    defaultLocale: "en-US",
+    supportedLocales: ["en-US", "es-US"],
+  },
+  {
+    id: "region-ca",
+    name: "Canada",
+    code: "ca",
+    currency: "CAD",
+    defaultLocale: "en-CA",
+    supportedLocales: ["en-CA", "fr-CA"],
+  },
+];
+
+const pages = [
+  {
+    title: "About DAP US",
+    slug: "/about",
+    regionId: "region-us",
+  },
+  {
+    title: "About DAP Canada",
+    slug: "/about",
+    regionId: "region-ca",
+  },
+];
+
+
+```
+### Query Logic
+
+```js
+user open 
+
+/ca/en/about
+
+next js extracts
+
+region = "ca"
+locale = "en"
+slug = "/about"
+
+Now we need to find a page where:
+
+page slug = /about
+page region code = ca
+
+But page has only:
+
+regionId: "region-ca"
+
+so there are two ways either we can create config mapper wich will region id and region only if it doesnot change much but if it changes a lot 
+better use fethc and cahce it revlidate when required
+
+
+first call this 
+/entries?content_type=region&fields.code=ca
+
+
+{
+  "sys": {
+    "id": "region-ca-entry-id"
+  },
+  "fields": {
+    "name": "Canada",
+    "code": "ca",
+    "currency": "CAD"
+  }
+}
+
+GET /entries?content_type=page&fields.slug=/about&fields.region.sys.id=region-ca-entry-id&locale=fr-CA
+```

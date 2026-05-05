@@ -1,53 +1,103 @@
-<!-- 2) Add metadata -->
+# Add metaData
 
-You usually write metadata in:
+## We add Metadata in layout.tsx for site wide
 
-app/layout.js or app/layout.tsx → for site-wide metadata
-app/page.js or app/page.tsx → for one page
-app/products/[slug]/page.js → for dynamic page metadata
+## we add metadata in page.tsx for 1 page
 
+## we add in product/[slug]/page.tsx for dynamic metadata
 
+```js
+//app/product
 
-import type { Metadata } from 'next'
+import type {MetaData} from 'next'
 
-export const metadata: Metadata = {
-  title: 'Products',
-  description: 'Browse all products',
+export const metaData:MetaData={
+  title:'Products',
+  description:'browse all products'
+}
+
+async function getAllProduct(){
+  const res = await('ww.')
+  const data  = await res.json()
+
+  return data
+}
+
+export default async function Page(){
+    let product = await getAllProduct()
+
+    return (
+      <>
+sds
+      </>
+    )
+}
+
+//app/product/[slug]/page.tsx
+
+export async function generateStaticParams(){
+     const res = fetch('https://products',{
+      next{
+        tags:['allproducts']
+      }
+     })
+
+     const data = await res.json()
+
+     return data.map((E)=>({
+      slug:E.id
+     }))
+}
+
+async function getById(id){
+     const res = fetch('https://products/:id')
+
+     const data = await res.json()
+     return data
 }
 
 
+export async function generateMetadata(props):Promise<MetaData>{
 
+  const slug = await props.params.slug
 
-import type { Metadata } from 'next'
-
-export async function generateMetadata(): Promise<Metadata> {
-  const product = await getProduct()
+  const p = await getById(slug)
 
   return {
-    title: product.name,
-    description: product.summary,
+    name:p.name
+    description:p.description
   }
+
 }
 
 
-1) Exposing robots.txt
+export default async function Page(props){
 
-This is a file for search engine bots.
-
-It tells bots:
-
-which pages they can crawl
-which pages they should avoid
-where sitemap is
-
-Example:
+  const slug = await props.params.slug
+const data  = await getById(slug)
+}
 
 
-# Add Crawl Files#
+```
 
-sitemap.xml
+# Robot.txt
+ ## this tell searhc crawlers wihch part of website they can crwal which part they cant and where is site map.xml
 
-plus built-in metadata APIs for title, description, robots, canonical, Open Graph, Twitter tags, and metadata files like robots.txt and sitemap.xml
+ ```js
+// app/robots.ts
 
-# robots.txt = rules for bots #
-# sitemap.xml = map of pages
+import type { MetadataRoute } from "next";
+
+export default function robots(): MetadataRoute.Robots {
+  return {
+    rules: {
+      userAgent: "*", // this rule is applicable for all
+      allow: "/", // crawling is allowed for public webiste
+      disallow: ["/admin", "/dashboard", "/api"], // dont crawl these pages
+    },
+    sitemap: "https://example.com/sitemap.xml", // where the sitemap is
+  };
+}
+
+ ```
+

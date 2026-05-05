@@ -1,152 +1,222 @@
-## SSG Static Site Generation - build html in build time  and serve same thing again and again
+## SSG Static Site Generation - build html in build time and serve same thing again and again
+
 ## SSR Server Side renderring - fethc new page on every request
-## ISG Increamnet site generation - its kind ssg but we delete the cached html and request new html  based some props like revalidate revalidatepath and revalidatetag
-## CSR Client side reneder - Hole html is created on the client sideused when ther lot hydration is requred 
 
+## ISG Increamnet site generation - its kind ssg but we delete the cached html and request new html based some props like revalidate revalidatepath and revalidatetag
 
-  ### SSG - we used this when data changes rarely 
+## CSR Client side reneder - Hole html is created on the client sideused when ther lot hydration is requred
 
+### SSG - we used this when data changes rarely
 
-    /**
-    import { notFound } from "next/navigation";
+```js
+//app/settings/[slug]/page.tsx:
 
+import { notFound } from "next/navigation";
 
+export async function generateStaticParams() {
+  const res = await fetch("https://jsonplaceholder.typicode.com/todos", {
+    cache: "force-cache",
+  });
 
-export async function  generateStaticParams(){ //which dynamic routes to build ahead of time. it awlasy used in dynamicn routes
+  const todos = await res.json();
 
-    const res = await fetch('https://jsonplaceholder.typicode.com/todos',{
-        cache:'force-cache'
-    })
-
-    const rs = await res.json();
-
-    rs.map((e:any)=>({
-        slug:e.id
-    }))
-
+  return todos.map((todo) => ({
+    slug: String(todo.string),
+  }));
 }
 
-export async function getPost(id:string){
-    const res = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`,{
-        cache:'force-cache'
-    })
+async function getByPostId(id) {
+  const res = await fetch(`https://jsonplaceholder.typicode.com/todos${id}`, {
+    cache: "force-cache",
+  });
 
-    const rs = await res.json();
-
-   if(rs == null){
-    notFound()
-   }
-   return res.json() as Promise<any>;
-
-}
-
-export   default  async function SettingsPage({params}:{params:Promise<{slug:string}>}) {
-    const { slug } = await params;
-  const post = await getPost(slug);
-
-  if (!post) {
-    return <div>Post not found</div>;
+  if (!res.ok) {
+    notfound();
   }
 
-  return (
-    <main>
-      <h1>{post.title}</h1>
-      <article>{post.content}</article>
-    </main>
-  );
+  const post = await res.json();
+
+  if (!post) {
+    notfound();
+  }
+
+  return post;
 }
-    
-    
-     */
 
-  ### SSR - is used when data changes a lot when want fresh page on each request
+export async function Page(props) {
+  const slug = await props.params.slug;
 
+  const post = await getByPostId(slug);
 
-  /**
-
-
-  // app/account/page.tsx
-export const dynamic = 'force-dynamic'; <--- this tels on each request createt this page again
-
-export default async function AccountPage() {
-  const res = await fetch('https://dummyjson.com/users/1', { < when i am calling this api dont next js fethc caching mechanism
-    cache: 'no-store',
-  });
-  const user = await res.json();
-
-  return (
-    <main>
-      <h1>My Account</h1>
-      <p>{user.firstName}</p>
-    </main>
-  );
+  return <>{post.id}</>;
 }
-   */
-  ### ISG  is like ssg but that page can be build fresh on demand
+```
 
-   1.Time based ISG
+### SSR Server Side Rendiering on each request fethc a new page for those wheere content keep changing eg dashboard mutual fund price
 
-   /**
-   export const revalidate = 60;
+```js
+export const dynamic = "force-dynamic"; // this tells next js on each request create fresh page
 
-export default async function ProductsPage() {
-  const res = await fetch('https://dummyjson.com/products?limit=5');
+export default async function Dashboard() {
+  const res = await fetch("https://dummyjson.com/users/1", {
+    cache: "no-cache",
+  }); // this tell next js to fetch new api data and dont use next js cached fetch mechanism
+
   const data = await res.json();
 
-  return (
-    <main>
-      <h1>Products</h1>
-      {data.products.map((p: any) => (
-        <div key={p.id}>{p.title}</div>
-      ))}
-    </main>
-  );
+  return <>{data.name}</>;
+}
+```
+
+### ISG is like ssg but that page can be build fresh on demand
+
+#### time bases revalidation
+
+```js
+export const revalidate = 60; // allow caching but build a new page after 60 secs
+
+export default async function Page() {
+  const res = await fetch("https://dummyjson.com/products?limit=5");
+  const data = await res.json();
+
+  return <>{data.id}</>;
+}
+```
+
+#### Demand based Revalidation (RevalidatePath)
+
+```js
+//api/revalidate/route.ts
+
+await fetch("https://your-site.com/api/revalidate", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "x-revalidate-secret": "my-super-secret-token",
+  },
+  body: JSON.stringify({
+    path: "/products",
+  }),
+});
+
+
+
+import {revalidate} from 'next/cache'
+import {nextResponse,nextRequest} from 'next/server'
+
+
+
+export async function Post(request){
+
+  const secret = request.header.get('x-revalidate-secret')
+
+  if(!secret || secret !=== PROCESS.env.secret){
+    return nextResponse.json({
+      message:'invalid secret',
+      status:401
+    })
+  }
+
+ const body = await request.json()
+  const slug = body.path
+
+  if(!slug || typeof(slug) !== 'string'){
+     return nextResponse.json({
+      message:'inalid path',
+      status:400
+    })
+  }
+
+  revalidatePath(slug)
+
+    return nextResponse.json({
+      message:'revalidate',
+      status:200
+    })
+
 }
 
-any request that is made withitn 60 secons wil get from acache post that it will fesh page
-   
-   
-    */
-
-    2 Demand Based ISG for this we use revalidatePath RevalidateTag
-
-
-    /**
-    import { revalidatePath,revalidateTag } from "next/cache";
-import { NextRequest,NextResponse } from "next/server";
 
 
 
-export async function post(request:NextRequest){
 
-        const secret =    request.headers.get('x-contnetfull')
+```
 
-        if(secret !== process.env.CONTENTFULL_TOKEN){
-            return new Response("Invalid secret", { status: 401 });
-        }
+#### Demand based Revalidation (RevalidateTag) its like revalidate path but instead of reviadting a page it revaidates cahced fetch/path which are connected to those tags
 
-        const body = await request.json();
-
-        const slug = body.slug
-        const tag = body.tag
-        
-
-        if(slug){
-            revalidatePath(slug)
-            return new Response("sucess", { status: 200 });
-
-        }
-        if(tag){
-            revalidateTag(tag,'max')//  <--- serve the stale data fist and refthc new dat ain background
-            return new Response("sucess", { status: 200 });
-        }
+```js
+// app/products/page.tsx
 
 
+export default async function ProductPage(){
+  const res = await fetch('https://dummyjson.com/products?limit=5',{
+    next:{
+      tags:['product']
+    }
+  })
+  const data = await res.json()
 
-        }
-    
-    
-     */
+  return (
+    <>
+
+{data.name}
+    </>
+  )
+}
+
+//cal from cms
+
+await fetch("https://your-site.com/api/revalidateTag", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "x-revalidate-secret": "my-super-secret-token",
+  },
+  body: JSON.stringify({
+   tag:'product'
+  }),
+});
+
+//app/api/revalidateTag/route.ts
+
+import {revalidateTag} from 'next/cache'
+import {NextResponse,NextRequest} from 'next/Server'
+
+export async function Post(request){
+  const secret = request.header.get('x-revalidate-secret')
+
+  if(!secret || secret !=== PROCESS.env.secret){
+    return NextResponse.json({
+      message:'inalid',
+      status:401
+    })
+  }
+
+ const body = await req.json();
+  const tag = body.tag;
+
+  if(!tag){
+     return NextResponse.json({
+      message:'inalid',
+      status:400
+    })
+  }
+
+  revalidateTag(tag)
+
+ return NextResponse.json({
+      message:'success',
+      status:200
+    })
+
+
+}
+
+
+
+
+
+```
 
 
 ## Why not make everything a Client Component?
@@ -158,5 +228,3 @@ bigger bundles
 slower hydration
 worse performance on low-end devices
 you lose benefits of server rendering and server data fetching
-
-   

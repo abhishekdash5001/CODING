@@ -1,0 +1,35 @@
+body {
+ color:var(--text-color);
+ background-color: var(--bg-color);
+transition: all 1s;
+
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Step 1: Create CSS variables */
+/* In an HTML page, :root is basically the same as html, but :root has higher specificity.  its used to define variables*/
+:root{
+  --bg-color: #ffffff;
+  --text-color: #111111;
+  --card-bg: #f4f4f4;
+  --button-bg: #111111;
+  --button-text: #ffffff;
+}
+
+html.dark{
+  --bg-color: #111111;
+  --text-color: #ffffff;
+  --card-bg: #1f1f1f;
+  --button-bg: #ffffff;
+  --button-text: #111111;
+}
+
+button{
+  background-color: var(--button-bg);
+  color:var(--button-text);
+  transition:  all 1s ;
+}

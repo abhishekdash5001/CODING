@@ -18,10 +18,91 @@ app/
       page.tsx            -> /shop/a/b/c
 
 
-      Difference between [id]  it will catch product/a
-      
-                         [...id] it will cacth product/a product/a/b/c  but not product
-                         [[...id]]  this will cathc all
+app/
+  product/
+    [id]/
+      page.tsx
+
+/product/a      ✅ id = "a"
+/product/b      ✅ id = "b"
+/product/a/b    ❌ not matched
+/product         ❌ not matched
+
+1. For [slug]
+
+```js
+export async function generateStaticParams() {
+  return [
+    { slug: "a" },
+    { slug: "b" },
+    { slug: "c" },
+  ];
+}
+
+
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+
+  return <h1>{slug}</h1>;
+}
+
+```
+
+
+app/
+  product/
+    [...id]/
+      page.tsx
+
+
+/product/a        ✅ id = ["a"]
+/product/a/b      ✅ id = ["a", "b"]
+/product/a/b/c    ✅ id = ["a", "b", "c"]
+/product          ❌ not matched
+
+
+2.for [...slug] recvied as a arary
+
+```js
+
+export async function generateStaticParams() {
+  return [
+    { slug: ["a"] },
+    { slug: ["a", "b"] },
+    { slug: ["a", "b", "c"] },
+  ];
+}
+
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string[] }>;
+}) {
+  const { slug } = await params;
+
+  return <h1>{slug.join("/")}</h1>;
+}
+
+```
+
+
+app/
+  product/
+    [[...id]]/
+      page.tsx
+
+
+/product          ✅ id = undefined
+/product/a        ✅ id = ["a"]
+/product/a/b      ✅ id = ["a", "b"]
+/product/a/b/c    ✅ id = ["a", "b", "c"]
+
+
+
 
 # layout.tsx in Next.js App Router
 
@@ -41,68 +122,62 @@ You use layout.tsx for things like:
  3.provider
  4, anything that can be sahred
 
-   ## Root Layout  will alwasy have html and body
-  /** 
-   app/
+## Root Layout will have body and html
+
+ app/
       layout.tsx
       page.tsx
       about/
         page.tsx
-        */
+  
 
-        /**
-        // app/layout.tsx
-            export default function RootLayout({
-              children,
-            }: {
-              children: React.ReactNode;
-            }) {
-              return (
-                <html lang="en">
-                  <body>
-                    <header>My Global Header</header>
-                    {children}
-                    <footer>My Global Footer</footer>
-                  </body>
-                </html>
-              );
-            }
-        
-         */
+  ```js
 
-   ## Segment layout
+  export default async function Layout({children}:{children:React.ReactNode}){
+    return (
+      <>
+      <header>
+Header
+        </header>
+{children}
+        <footer>
+          footer
+          </footer>
 
-    /**
-    app/
+
+      </>
+    )
+  }
+
+  ```
+## Nested Layout
+  app/
   layout.tsx
-  page.tsx
-  blog/
-    layout.tsx <------
+  dashboard/
+    layout.tsx
     page.tsx
-    [slug]/
+    settings/
       page.tsx
-    
-     */
 
-      /**
+  ```js
+
+<RootLayout>
+  <DashBoardLayout>
+    <DashboardPage/>
+     <DashBoardLayout/>
+
+  </RootLayout>
+
+
+<RootLayout>
+  <DashBoardLayout>
+    <DashboardPage/>
+     <DashboardSettings/>
+
+  </RootLayout>
+  ```
+
       
-      // app/blog/layout.tsx
-      export default function BlogLayout({
-        children,
-      }: {
-        children: React.ReactNode;
-      }) {
-        return (
-          <section>
-            <aside>Blog Sidebar</aside>
-            <main>{children}</main>
-          </section>
-        );
-      }
-       */
-
-
-    
   ## Nested layout
 
     /**

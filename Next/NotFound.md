@@ -1,0 +1,1 @@
+## layout doenot render its sibling not found.tsx why bcz layout desonot finish rendering it throws not found so it wil go the parent show the not found from three
